@@ -1,0 +1,116 @@
+# Network Configuration
+network:
+  # Core node settings
+  num_devices: 100          # Base total number of devices
+  num_gateways: 10         # Number of gateways
+  max_honeypot_ratio: 0.6  # Maximum 60% can be honeypots
+  min_normal_ratio: 0.4    # Minimum 40% must stay normal
+  max_queue_size: 20       # Maximum traffic queue size
+
+  # Processing times
+  timing:
+    normal_processing_time: 1     # Normal traffic processing
+    attack_processing_time: 2     # Attack traffic processing
+    honeypot_processing_time: 3   # Honeypot traffic processing
+    isolation_time: 1            # Node isolation phase
+    conversion_time: 1           # Node conversion phase
+    conversion_cooldown: 5       # Wait before next conversion
+    reversion_cooldown: 3        # Wait before reverting
+    honeypot_busy_time: 3       # Time honeypot is busy processing
+    queue_timeout: 5            # Maximum time traffic can stay in queue
+
+  recovery:
+    enabled: true
+    recovery_time: 10
+    recovery_probability: 0.3
+
+  attack:
+    normal_node_success_prob: 1.0
+    honeypot_success_prob: 0.0
+    gateway_success_prob: 0.0
+
+# IDS Configuration
+ids:
+  model_type: 'xgb'
+  detection_thresholds:
+    high: 0.6                  # High risk threshold (αh)
+    medium: 0.45              # Medium risk threshold
+    low: 0.45                 # Low risk threshold
+  buffer_zone: 0.15            # Buffer zone size (β)
+
+  xgb_model_path: 'models/ids_xgb_model_tftp.joblib'
+  data_path: 'data/prepared_data/prepared_data_cicddos2019_tftp.npz'
+  scaler_path: 'data/prepared_data/feature_scaler_cicddos2019_tftp.joblib'
+
+  buffer_handling:
+    high_buffer_action: "random"    # Random routing in buffer zone
+    medium_buffer_action: "random"  # Random routing in buffer zone
+
+  attack_detection:
+    high_threshold_certainty: 1.0   # P(detect|attack) above high threshold
+    medium_threshold_certainty: 0.8  # P(detect|attack) above medium threshold
+
+# Experiment Scenarios
+scenarios:
+  baseline:
+    description: "No honeypots - baseline network"
+    initial_honeypots: 0
+    total_nodes: 100
+  
+  dedicated:
+    description: "Static honeypot deployment"
+    initial_honeypots: 10
+    total_nodes: 100
+  
+  dynamic:
+    description: "Dynamic honeypot conversion"
+    initial_honeypots: 0
+    total_nodes: 100
+    max_converted: 60  # Maximum 60% conversion
+
+# Traffic Settings
+traffic:
+  attack_proportion: 0.2    # 20% attack traffic
+  timesteps: 1000          # Number of timesteps per experiment
+  dataset: 'CICDDoS2019'
+
+# Blockchain Settings
+blockchain:
+  enabled: true
+  node_url: "http://127.0.0.1:8545"
+  private_key: "0x065ac7d8bc7d1559ae4337678a6dfd2244d6034996fa0485b37ca99658728b37"
+  account_address: "0xDc7b7040C811B6C819A7CE55d1C01829aB57D25d"
+  contract_address: "0x22eA728dd4c3f2891166336A2cc3c322f0409709"
+  transaction_timeout: 1
+  chain_id: 1337
+
+# Experiment Settings
+experiment:
+  random_seed: 42
+  num_runs: 30             # For statistical significance
+  timesteps: 1000         # Length of each experiment run
+  save_results: 'final'    # Only save final results
+
+# Scalability Test Settings
+scalability:
+  # Network Size Tests
+  network_sizes:
+    sizes: [100, 200, 500, 1000]  # Testing different network sizes
+    attack_proportion: 0.2        # Fixed attack rate for size tests
+    timesteps: 1000              # Length of each test
+
+  # Attack Proportion Tests  
+  attack_proportions:
+    ratios: [0.1, 0.2, 0.3, 0.4, 0.5]  # Testing increasing attack loads
+    network_size: 100                   # Fixed network size
+    timesteps: 1000                     # Length of each test
+
+  # Common Settings
+  runs_per_test: 30                    # Statistical significance
+  metrics_to_track:
+    - attack_prevention_rate           # How well system prevents attacks
+    - current_compromise_rate          # Current system compromise state
+    - cumulative_compromise_rate       # Total nodes ever compromised
+    - honeypot_utilization_rate       # Honeypot resource usage
+    - traffic_loss_rate               # System congestion indicator
+    - node_availability_rate          # System availability measure
