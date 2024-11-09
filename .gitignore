@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+.DS_Store
+
+# Data files
+*.csv
+*.npz
+*.npy
+*.pkl
+*.joblib
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Results and logs
+logs/
+*.log
+results/
+results/data/*
+results/logs/*
+!results/data/.gitkeep
+!results/logs/.gitkeep
+
+# Model files
+models/
+*.h5
+*.pb
+*.pth
+
+# Blockchain
+build/
+node_modules/" > .gitignore
+
+# Documentation
+docs/_build/
