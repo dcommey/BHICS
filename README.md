@@ -94,22 +94,19 @@ The system is evaluated using the CICDDoS2019 dataset, which includes various at
 - Protocol attacks (SYN flood, ICMP flood)
 - Application-layer attacks (HTTP flood, Slowloris)
 
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Submit a pull request
+## Model Analysis
+The detailed model analysis and comparison for the IDS component is available at:
+https://github.com/dcommey/BHICS_IDS
 
 ## Citation
 If you use BHICS in your research, please cite:
 ```bibtex
-@article{commey2024bhics,
-  title={BHICS: A Dynamic Honeypot Conversion System for IoT Network Security},
-  author={Commey, Daniel and [Other Authors]},
-  journal={[Journal Name]},
-  year={2024},
-  publisher={[Publisher]}
+@article{commey2025bhics,
+  title={Blockchain-Enabled Dynamic Honeypot Conversion for Resource-Efficient IoT Security},
+  author={Commey, Daniel and Nkoom, Matilda and Hounsinou, Sena G. and Crosby, Garth V.},
+  journal={Journal of Information Security and Applications},
+  year={2025},
+  publisher={Elsevier}
 }
 ```
 
